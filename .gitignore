@@ -1,3 +1,5 @@
 README.rst
 env
 *.pyc
+dist
+*.egg-info
