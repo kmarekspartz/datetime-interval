@@ -15,5 +15,5 @@ period `timedelta` and a count of occurrences (either an `int` or `forever`).
     - This wouldn't work on PeriodicInterval, as recurring intervals have a
       different semantics in ISO 8601.
 - Property-based testing with `props`
-- Add operators (in, +, -, *, [], etc.)
+- Add operators for PeriodicInterval (*, [])
 - How to account for e.g. every Tuesday and Thursday
