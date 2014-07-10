@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='datetime-interval',
-    version='0.1',
+    version='0.2',
     description='A representation of a duration of time',
     long_description=open('README.rst').read(),
     author='Kyle Marek-Spartz',
