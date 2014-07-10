@@ -90,6 +90,7 @@ class Interval(object):
         assert start and duration and end
 
         # Assign the values:
+        # TODO: Make these getters only? Or Setters which adjust the other values?
         self.start = start
         self.duration = duration
         self.end = end
