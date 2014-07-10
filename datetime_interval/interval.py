@@ -5,6 +5,13 @@ Interval represents a duration of time at a specific point in time.
 from datetime import date, timedelta
 
 
+class IntervalComparisonError(Exception):
+    """
+    Raised when comparing inequal but overlapping Intervals.
+    """
+    pass
+
+
 class Interval(object):
     """
     An interval represents a duration of time and its location on the
@@ -13,24 +20,27 @@ class Interval(object):
     - start and end dates (or datetimes)
     - a start date (or datetime) and a timedelta
     - a timedelta and an end date (or datetime)
+
+    Provides the following operators:
+        for pairs of Intervals:
+            is
+            is not
+            ==
+            !=
+            <
+            <=
+            >
+            >=
+
+        for a date and an Interval:
+            in
+
+        for an Interval and a timedelta:
+            +
+            -
     """
 
-    # TODO: Add operators:
-
-    # Comparison: is, ==, !=,  (<, >, <=, >=)?
-
-    # Contains: in
-    #      Date in Interval
-
-    # Subtraction: -
-    #      Interval - timedelta => Interval
-    #      Interval - Interval => Interval | ValueError
-    #      Interval - _ => TypeError
-
-    # Concatenation:
-    #      Interval + timedelta => Interval
-    #      Interval + Interval => Interval | ValueError
-    #      Interval + _ => TypeError
+    # TODO: Add periodic operators:
 
     # Periodic: *
     #      Interval * int => (Bounded) PeriodicInterval
@@ -102,3 +112,72 @@ class Interval(object):
         assert isinstance(self.end, date)
         assert self._timedelta_is_positive(self.duration)
         assert self.start <= self.end
+
+    def __cmp__(self, other):
+        """
+        Provides comparison operators for two Intervals.
+        """
+        # TODO: Handle periodic intervals.
+        assert isinstance(other, Interval)
+        equals = (
+            self.start == other.start
+            and self.duration == other.duration
+            and self.end == other.end
+            and self.is_periodic == other.is_periodic
+        )
+        if equals:
+            return 0
+
+        less_than = (
+            self.start < other.start
+            and self.end < other.end
+        )
+        if less_than:
+            return -1
+
+        greater_than = (
+            self.start > other.start
+            and self.end > other.end
+        )
+        if greater_than:
+            return 1
+        raise IntervalComparisonError
+
+    def __contains__(self, item):
+        """
+        Checks if a date is contained within the Interval, e.g.:
+
+        >>> datetime.now() in Interval(datetime.now(), timedelta(1))
+        True
+        """
+        assert isinstance(item, date)
+        return (
+            self.start <= item
+            and self.end >= item
+        )
+
+    def __add__(self, other):
+        """
+        Return a new Interval, moved ahead by other (a timedelta).
+        """
+        # TODO:
+        # Interval + Interval => Interval | ValueError
+        # Interval + _ => TypeError
+        assert isinstance(other, timedelta)
+        return Interval(
+            self.start + other,
+            self.duration
+        )
+
+    def __sub__(self, other):
+        """
+        Return a new Interval, moved back by other (a timedelta).
+        """
+        # TODO:
+        # Interval - Interval => Interval | ValueError
+        # Interval - _ => TypeError
+        assert isinstance(other, timedelta)
+        return Interval(
+            self.start - other,
+            self.duration
+        )
