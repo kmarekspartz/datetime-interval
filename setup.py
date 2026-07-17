@@ -2,9 +2,10 @@ from setuptools import setup
 
 setup(
     name='datetime-interval',
-    version='0.2',
+    version='0.3',
     description='A representation of a duration of time',
-    long_description=open('README.rst').read(),
+    long_description=open('README.md').read(),
+    long_description_content_type='text/markdown',
     author='Kyle Marek-Spartz',
     author_email='kyle.marek.spartz@gmail.com',
     url='https://www.github.com/zeckalpha/datetime-interval',

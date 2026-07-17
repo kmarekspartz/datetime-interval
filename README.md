@@ -1,5 +1,9 @@
 # datetime-interval
 
+> [!WARNING]
+> **This project is archived and is no longer maintained.**
+> No further updates or releases will be made. For representing durations, intervals, or recurring events, we recommend using Python's built-in `datetime.timedelta`, or libraries like [Pendulum](https://pendulum.eustace.io/) or [aniso8601](https://github.com/ncalexan/aniso8601).
+
 The builtin `datetime` module provides classes for points in time (`date`, and
 `datetime`) as well as durations (`timedelta`), but it does not account for
 time durations at a specific point. This module provides `Interval`, which
